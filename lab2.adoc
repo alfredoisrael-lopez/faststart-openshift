@@ -33,7 +33,7 @@ The sample project shows the components of a Node.js project using Node.js and N
 
 The app implements a simple RESTful microservice which implements a greeting service (that simply returns a Hello greeting).
 
-. Inspect the application code
+1) Inspect the application code
 
 Click the links below to open each file and inspect its contents:
 
@@ -41,3 +41,120 @@ Click the links below to open each file and inspect its contents:
 - link:src/app.js[app.js] - Main logic of the sample application defining REST endpoints and application runtime configuration.
 - link:src/app-config.yml[app-config.yml] - Content used to initially populate the OpenShift ConfigMap, which the sample app will access at runtime.
 - link:src/public/index.html[public/index.html] - Simple web UI to access the greeting service.
+- link:src/bin/www[bin/www] - Express framework base server code
+
+Review the content a bit and notice that there are some TODO comments in the code. Do not remove them! The comments are used as marker and without them you will not be able finish the scenario.
+
+The /api/greeting API defined in app.js returns a simple message including an optional name. You will modify this file later on.
+
+2) Install dependencies
+
+Dependencies are listed in the link:src/package.json[package.json] file and declare which external
+projects this sample app requires. To download and install them, run the following command:
+
+`+npm install+`
+
+It will take a few seconds to download, and you should see a final report such as added 774 packages in 9.79s
+
+3) Run the application locally
+
+Before we add code to the project you should build and test that current application starts as it should.
+
+Since this is a working application, run the application locally using npm:
+
+`+npm start+`
+
+At this stage the application doesn't really do anything but after a while you will see:
+
+  nodejs-configmap@1.0.0 start /root/projects/rhoar-getting-started/nodejs node .
+
+4) Test the application
+
+Open a browser and point to localhost:8080 You should see :
+
+image::localapp.png[Local Application]
+
+5) Stop the application
+
+Press `+ctrl+C+` in the command window to stop the local node.js server
+
+[[create-project]]
+== Create an Openshift Project
+
+Now we will deploy the application we have created to the openshift installation we created in lab 1.
+
+1) Login to OpenShift
+
+In order to login, we will use the oc command and then specify the local server that we want to authenticate to:
+
+`+oc login+`
+
+You should see the below dialog. Use developer/developer as user ad Password
+
+  Authentication required for https://192.168.99.101:8443 (openshift)
+  Username: developer
+  Password:
+  Login successful.
+  You have one project on this server: "myproject"
+  Using project "myproject".
+
+2) Create an Openshift project
+
+Projects are a top level concept to help you organize your deployments. An OpenShift project allows a community of users (or a user) to organize and manage their content in isolation from other communities. Each project has its own resources, policies (who can or cannot perform actions), and constraints (quotas and limits on resources, etc). Projects act as a wrapper around all the application services and endpoints you (or your teams) are using for your work.
+
+For this scenario, let's create a project that you will use to house your applications.
+
+`+oc new-project example --display-name="Sample Node.js External Config App"+`
+
+3) Work with the Openshift Web Console
+
+OpenShift ships with a web-based console that will allow users to perform various tasks via a browser. To get a feel for how the web console works, open a browser on the address of the openshift server console of lab 1. If you no longer remember the address execute :
+
+`+minishift console+`
+
+Login with developer/developer as user and password
+
+You should see the previously created project.
+
+image::projects.png[Projects]
+
+Click on your new project name to be taken to the project overview page which will list all of the routes, services, deployments, and pods that you have running as part of your project:
+
+image::overview.png[project overview]
+
+[[deploy-application]]
+== Deploy your sample application
+
+Now that you've logged into OpenShift, let's deploy the same sample application as before.
+
+1) Build and deploy
+
+Build and deploy the project using the following command:
+
+`+npm run openshift+`
+
+This uses NPM and the https://github.com/bucharest-gold/nodeshift[Nodeshift] project to build and deploy the sample application to OpenShift using the containerized Node.js runtime. Nodeshift uses the files in the .nodeshift directory of the sample project to create the necessary Kubernetes objects to cause the application to be deployed.
+
+The build and deploy may take a minute or two. Wait for it to complete. You should see INFO done at the end of the build output, and you should not see any obvious errors or failures.
+
+After the build finishes it will take less than a minute for the application to become available. To verify that everything is started, run the following command and wait for it report
+
+`+oc rollout status dc/nodejs-configmap+`
+
+You should see
+
+    replication controller "nodejs-configmap-1" successfully rolled out
+
+2) Access the application running on OpenShift
+
+Go back to the openshift webconsole. In the project page you should now see the application.
+
+image::deployedapp.png[deployed application]
+
+Click on the application route url to access the application in your browser.
+
+Enter a name in the 'Name' field and click Invoke to test out the service. You should get the same hard-coded greeting as in previous steps.
+
+image::hardcode.png[appliction sample]
+
+While the greeting code is functional, if you wanted to change the message you would need to stop the application, make the code change, and re-deploy. As you'll learn in the next section, in a real world application this may not be feasible and a mechanism to dynamically change the content is needed. You will add this using OpenShift ConfigMaps.
