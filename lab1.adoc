@@ -1,0 +1,87 @@
+[[minishift]]
+= Lab1 Installing Minishift
+:icons:
+:toc: macro
+:toc-title:
+:toclevels: 1
+
+toc::[]
+
+[[welcome-to-minishift]]
+== Welcome to Minishift!
+
+Minishift is a tool that helps you run OpenShift locally by running a
+single-node OpenShift cluster inside a VM. You can try out OpenShift or
+develop with it, day-to-day, on your local host.
+
+Minishift uses https://github.com/docker/machine/tree/master/libmachine[libmachine] for
+provisioning VMs, and https://github.com/openshift/origin[OpenShift Origin] for running the cluster. The code base is forked from the https://github.com/kubernetes/minikube[Minikube] project.
+
+https://travis-ci.org/minishift/minishift[image:https://secure.travis-ci.org/minishift/minishift.png[Build Status]]
+https://ci.appveyor.com/project/minishift-bot/minishift/branch/master[image:https://ci.appveyor.com/api/projects/status/o0mha7mpanp7dpyo/branch/master?svg=true[Build status]]
+https://circleci.com/gh/minishift/minishift/tree/master[image:https://circleci.com/gh/minishift/minishift/tree/master.svg?style=svg[Build status]]
+https://ci.centos.org/job/minishift/[image:https://ci.centos.org/buildStatus/icon?job=minishift[Build Status]]
+
+'''''
+
+[[getting-started]]
+== Getting started
+
+Download the binary for installing on Linux from https://github.com/minishift/minishift/releases/download/v1.29.0/minishift-1.29.0-linux-amd64.tgz
+This will be used to install Minishift on your virtual machine.
+
+Minishift requires a hypervisor to start the virtual machine on which the OpenShift cluster
+is provisioned. In our lab we will use Virtual Box which has been provided on the virtual machine.
+
+For detailed installation instructions for Minishift and the required dependencies, see
+the https://docs.okd.io/latest/minishift/getting-started/index.html[Getting started] documentation.
+
+Extract the content of the tar file with the command : +
+`+tar -xvf minishift-1.29.0-darwin-amd64.tgz+` +
+
+Add the minishift binary to your path variable.
+
+Start your minishift instance by executing : +
+`+minishift start --vmdriver virtualbox+`
+
+After the server has started you should see something similar to the below
+
+  OpenShift server started.
+  The server is accessible via web console at:
+       https://192.168.99.128:8443
+  You are logged in as:
+       User:     developer
+       Password: developer
+  To login as administrator:
+       oc login -u system:admin+`
+
+Try to access the web console using a browser. Your Minishift is now installed.
+
+[[application]]
+== Deploy your first application
+
+The first step is to ensure that the oc client is added to your path. Execute :
+
+`+eval $(minishift oc-env)+`
+
+Now you should be able to execute `+oc+`. This will show you the man page for the openshift client.
+
+Create a sample application :
+
+`+oc new-app https://github.com/sclorg/nodejs-ex -l name=myapp+`
+
+Expose the application through a service definition
+
+`+oc expose svc/nodejs-ex+`
+
+Access your application using a browser :
+
+`+minishift openshift service nodejs-ex --in-browser+`
+
+You can also check your application project using the console. Open the console on the right side you should see a default MyProject which was created during setup.
+
+image::myprojects.png[MyProjects]
+
+Click on the My Project entry and open the details
+
+image::projectdetail.png[projectdetail]
