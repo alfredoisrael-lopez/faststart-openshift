@@ -158,3 +158,207 @@ Enter a name in the 'Name' field and click Invoke to test out the service. You s
 image::hardcode.png[appliction sample]
 
 While the greeting code is functional, if you wanted to change the message you would need to stop the application, make the code change, and re-deploy. As you'll learn in the next section, in a real world application this may not be feasible and a mechanism to dynamically change the content is needed. You will add this using OpenShift ConfigMaps.
+
+[[config-maps]]
+== Add dependencies for ConfigMaps
+
+=== What is a ConfigMap
+
+ConfigMap is an object used by OpenShift to inject configuration data as simple key and value pairs into one or
+more Linux containers while keeping the containers agnostic of OpenShift.
+You can create a ConfigMap object in a variety of different ways, including using a YAML file, and inject it into the Linux container.
+You can find more information about ConfigMap in the https://docs.openshift.org/latest/dev_guide/configmaps.html[OpenShift documentation].
+
+=== Why ConfigMap is Important
+
+It is important for an application’s configuration to be externalized and separate from its code. This allows for the application’s configuration to change as it moves through different environments while leaving the code unchanged. This also keeps sensitive or internal information out of your codebase and version control. Many languages and application servers provide environment variables to support externalizing an application’s configuration. Microservices and Linux containers increase the complexity of this by adding pods, or groups of containers representing a deployment, and polyglot environments. ConfigMaps enable application configuration to be externalized and used in individual Linux containers and pods in a language agnostic way. ConfigMaps also allow sets of configuration data to be easily grouped and scaled, which enables you to configure an arbitrarily large number of environments beyond the basic Dev, Stage, and Production.
+
+=== Add NPM modules for ConfigMap support
+
+The NPM package ecosystem contains projects that help implement various functionality in Node apps. To enable our sample Node app to access OpenShift ConfigMaps, you'll need to declare a dependency on a new package.
+
+Execute the following command to insert the new dependencies into the package.json file:
+
+`+npm install "openshift-rest-client@^1.0.1" --save-prod+`
+
+This will download and install the needed dependency and update the link:src/package.json[package.json] file.
+
+Using this package the application will be able to access its configuration from OpenShift using a ConfigMap. But you still need to implement the logic behind that access, which you'll do next.
+
+[[coding]]
+== Add Logic to Access ConfigMap
+
+We are now ready to change our application to use ConfigMaps!
+
+In the sample application is the hard-coded message that is returned to the caller of the service:
+
+  let message = "Default hard-coded greeting: Hello, %s!";
+
+We'll override this value by periodically retrieving a ConfigMap and overriding the value of message.
+
+1) Add timed interval to retrieve configmap
+
+In app.js add a new block of code that is executed every 2 seconds that retrieves the message value and overrides the variable.
+
+  setInterval(() => {
+  retrieveConfigMap().then(config => {
+    if (!config) {
+        message = null;
+        return;
+      }
+    if (JSON.stringify(config) !== JSON.stringify(configMap)) {
+      configMap = config;
+      message = config.message;
+      }
+    }).catch((err) => {
+    });
+    }, 2000);
+
+We are using https://javascript.info/promise-chaining[Promise chaining] to write efficient yet readable asynchronous method call chains to retrieve the ConfigMap.
+
+The above method calls `+setInterval()+` https://nodejs.org/api/timers.html[(a Node.js interval timer)] to periodically invoke `+retrieveConfigMap()+` which
+returns a promise object which will return the ConfigMap object named config and pass it to the callback to override the value of message.
+We catch and ignore errors for the purposes of this sample.
+
+Now that we have the logic in place to update the value, we need to implement the missing retrieveConfigMap() method which will need to return a promise to call into OpenShift and retrieve the ConfigMap content itself.
+
+2) Add Configmap retrieval Logic
+
+  // Find the Config Map
+  const openshiftRestClient = require('openshift-rest-client');
+  function retrieveConfigMap() {
+  const settings = {
+    request: {
+      strictSSL: false
+      }
+    };
+  return openshiftRestClient(settings).then(client => {
+    const configMapName = 'app-config';
+    return client.configmaps.find(configMapName).then(configMap => {
+      return jsyaml.safeLoad(configMap.data['app-config.yml']);
+    });
+  });
+}
+
+In this code we are returning yet another promise which will be responsible
+for using the https://www.npmjs.com/package/openshift-rest-client[openshift-rest-client]
+module to make the call to the OpenShift REST API and retrieve the ConfigMap.
+
+The use of promises and promise chaining may take a little getting used to,
+but ultimately it results in an ordered and well-defined process to retrieve the ConfigMap from OpenShift, parse it into a Javascript-friendly JSON object, and use it to override the value of our message variable so that we can control its value externally, without requiring any changes in the application code.
+The final chain called every 2 seconds looks something like:
+
+  openshiftRestClient -> retrieve ConfigMap using .find('app-config') -> convert yaml to json ->  override message value
+
+With our new logic in place, we can now create the actual ConfigMap within OpenShift which will contain the config vales accessed by the logic.
+
+[[create-configmap]]
+== Create ConfigMap Object
+
+ConfigMaps can be created in a few different ways. For this example we will use
+the oc command to create a ConfigMap based on the contents of the `+app-config.yml+` file included as part of the sample application.
+
+1) Assign permissions
+
+Applications needing to access ConfigMaps need permission to do so. Execute the below command to grant access to the application:
+
+`+oc policy add-role-to-user view -n $(oc project -q) -z default+`
+
+2) Create ConfigMap
+
+Execute the below command to create the ConfigMap object. Since you're still logged into OpenShift,
+and currently in the example project, the ConfigMap will be created there, and accessible from applications
+running within this project.
+
+`+oc create configmap app-config --from-file=app-config.yml+`
+
+The name `+app-config+` is the same name as is used in the code in `+app.js+` to access the ConfigMap at runtime.
+
+3) Verify that the ConfigMap is created
+
+`+oc describe cm app-config+`
+
+You should see the contents of the ConfigMap in the terminal window:
+
+  Name:           app-config
+  Namespace:      example
+  Labels:         <none>
+  Annotations:    <none>
+  Data
+  ====
+  app-config.yml:
+  ----
+  message : "Hello, %s from a ConfigMap !"
+  Events: <none>
+
+The Data values of the ConfigMap contains key/value pairs, in this case a key of app-config.yml (derived from the name of the file from which the ConfigMap was initialized) which contains the configuration values. At runtime, the code you wrote in the last step accesses the ConfigMap using these names to read the content (in this case, the message value that we use in the app to customize the returned message at runtime).
+
+Now that you have the application coded to read the ConfigMap, and have created the ConfigMap, it's time to re-deploy the application and test out our new functionality.
+
+[[redeploy]]
+== Redeploy to Openshift
+
+With our code and ConfigMap in place, lets rebuild and redeploy using the same command as before. Execute the command:
+
+`+npm run openshift+`
+
+The rebuild and redeploy may take a minute or two. Wait for it to complete.
+
+After the build finishes it will take less than a minute for the application to become available. To verify that everything is started, run the following command and wait for it report
+
+`+oc rollout status dc/nodejs-configmap+`
+
+Once the application is re-deployed, re-visit the sample UI by clicking the application
+link from the openshift web console
+
+image::overview-link.png[application link]
+
+The application will now read the ConfigMap values and use them in place of the hard-coded default.
+
+Test the deployed applications
+
+Enter a name in the 'Name' field and click Invoke to test out the service. You should now see the updated message Hello, [name] from a ConfigMap ! indicating that the application successfully accessed the ConfigMap and used its value for the message.
+
+image::new-message.png[New Message]
+
+
+In the final step, we'll modify the ConfigMap and verify that the application successfully picks up the changes automatically.
+
+[[modify-configmap]]
+== Modify the ConfigMap
+
+Modifying ConfigMaps can also be done in a few different ways. For this step we will use the OpenShift Web Console to graphically (and manually) update the ConfigMap. This could also be done programmatically if desired. Follow the below steps:
+
+1) Modify the ConfigMap values
+
+Return to the Openshift web Console
+
+Select the example application as before to open the Overview page for the project:
+
+image::overview-populated.png[populated app]
+
+From here, navigate to Resources -> Config Maps to display a list of ConfigMaps:
+
+image::configmaps.png[config maps view]
+
+Click on the app-config ConfigMap to display the ConfigMap details:
+
+image::configmap-detail.png[configmap detail view]
+
+To change the value for message, click on the Actions button and select Edit:
+
+image::configmap-edit.png[edit configmap]
+
+Replace the value of message by carefully changing the existing text. You can use %s as a placeholder for the name to be included in the greeting:
+
+image::configmap-edit-replace.png[new value]
+
+2) Verify the application has updated
+
+Return to the application and type in your name into the Name field once again. Click the Invoke button to verify that the message returned is the same as what you supplied in the ConfigMap:
+
+image::configmap-verify.png[verify config map]
+
+Congratulations!
+
+Without changing a single line of code you were able to update the behavior of the application using OpenShift ConfigMaps.
