@@ -18,7 +18,9 @@ The training is scheduled to be presented during IBM Fast Start 2.0 - 2019 at lo
 
 ### Get started with training
 
-[Click on this link to open the Agenda and start the training](AGENDA.md)
+[Lab 1 - Installing Minishift](lab1.adoc)
+
+[Lab 2 - Developing a Node.js Application on OpenShift](lab2.adoc)
 
 ---
 <br>
