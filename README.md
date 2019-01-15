@@ -24,12 +24,3 @@ The training is scheduled to be presented during IBM Fast Start 2.0 - 2019 at lo
 
 ---
 <br>
-<sub>
-
-© Copyright IBM Corporation 2019.
-
-U.S. Government Users Restricted Rights - Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
-
-Pages might contain other proprietary notices and copyright information that should be observed. 
-
-</sub>
