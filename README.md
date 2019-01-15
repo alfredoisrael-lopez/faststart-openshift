@@ -1,15 +1,14 @@
-# faststart-openshift
 
 # IBM Cloud 
 
 ## Learning at IBM
 
-<img width="999" height="100" src="/images/fs_title.png">
+<img width="999" height="100" src="fs_title.png">
 
 
 The content of this repository has been developed to provide an IBM Fast Start 2.0 training session titled:
 <br>
-#### <i>&nbsp;&nbsp;&nbsp;&nbsp;Problem Determination and Troubleshooting</i>
+#### <i>&nbsp;&nbsp;&nbsp;&nbsp;Work with Red Hat OpenShift - Lab</i>
 
 The session provides attendees with training related to IBM® Cloud Private, Kubernetes, and Docker.
 
