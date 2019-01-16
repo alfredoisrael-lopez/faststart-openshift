@@ -92,6 +92,10 @@ The first step is to ensure that the oc client is added to your path. Execute :
 
 Now you should be able to execute `+oc+`. This will show you the man page for the OpenShift client.
 
+Create a project for your application. A project in RHOS is the direct equivalent of a namespace in ICP or Kubernetes :
+
+`+oc new-app https://github.com/sclorg/nodejs-ex -l name=myapp+`
+
 Create a sample application :
 
 `+oc new-app https://github.com/sclorg/nodejs-ex -l name=myapp+`
