@@ -94,7 +94,7 @@ Now you should be able to execute `+oc+`. This will show you the man page for th
 
 Create a project for your application. A project in RHOS is the direct equivalent of a namespace in ICP or Kubernetes :
 
-`+oc new-app https://github.com/sclorg/nodejs-ex -l name=myapp+`
+`+oc new-project myproject --display-name="My Project"+`
 
 Create a sample application :
 
