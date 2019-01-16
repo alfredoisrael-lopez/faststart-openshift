@@ -1,5 +1,5 @@
 [[develop]]
-= Lab2 Developing a Node.js Application on Openshift
+= Lab 2 - Developing a Node.js Application on Openshift
 :icons:
 :toc: macro
 :toc-title:
