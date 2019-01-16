@@ -37,10 +37,10 @@ image::skytaplogin.png[skytaplogin]
 
 `skytap` is a super user on the base Ubuntu operating system. Login to the machine using the password `A1rb0rn3`
 
-Within the image, you can click on the Desktop to open Firefox or Chrome. Firefox has been set as the default browser. It may be helpful to open the labs in the browser for easier copying and pasting of commands below. https://github.com/cattoire/faststart-openshift/blob/master/lab1.adoc
+Within the image, you can click on the Desktop to open Firefox or Chrome. Firefox has been set as the default browser. It may be helpful to open the labs in the browser for easier copying and pasting of the commands below. Follow the link to this lab: https://github.com/cattoire/faststart-openshift/blob/master/lab1.adoc
 
 If you are now viewing this lab within the Skytap image browser, you can download the binary for installing Minishift on Linux from https://github.com/minishift/minishift/releases/download/v1.29.0/minishift-1.29.0-linux-amd64.tgz
-Save the tat file to your Downloads folder. This will be used to install Minishift on your virtual machine.
+Save the tar file to your Downloads folder. This will be used to install Minishift on your virtual machine.
 
 Minishift requires a hypervisor to start the virtual machine on which the OpenShift cluster
 is provisioned. In our lab we will use Virtual Box which has already been provided on the virtual machine.
