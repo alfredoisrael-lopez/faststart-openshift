@@ -81,7 +81,7 @@ After the server has started you should see something similar to the below
   To login as administrator:
        oc login -u system:admin
 
-Try to access the web console using a browser. Your Minishift is now installed.
+Try to access the web console using the provided web console address and developer/developer for username/password. Your Minishift is now installed.
 
 [[application]]
 == Deploy your first application
