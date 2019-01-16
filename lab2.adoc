@@ -96,7 +96,7 @@ In order to login, we will use the oc command and then specify the local server 
 
 `+oc login+`
 
-You should see the below dialog. Use developer/developer as user ad Password
+You should see the below dialog. Use developer/developer as user and password.
 
   Authentication required for https://192.168.99.101:8443 (openshift)
   Username: developer
