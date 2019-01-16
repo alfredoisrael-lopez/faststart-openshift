@@ -48,16 +48,16 @@ is provisioned. In our lab we will use Virtual Box which has already been provid
 For detailed installation instructions for Minishift and the required dependencies, see
 the https://docs.okd.io/latest/minishift/getting-started/index.html[Getting started] documentation.
 
-Open a terminal window in the virtual machine. There is a shortcut to the Terminal on the Desktop. Navigate to the `minishift-lab` directory. +
+Open a terminal window in the virtual machine. There is a shortcut to the Terminal on the Desktop. Navigate to the minishift-lab directory. +
 `cd /~/minishift-lab`
 
-Copy the Minishift binary to the `minishift-lab` directory. +
+Copy the Minishift binary to the minishift-lab directory. +
 `cp /~/Downloads/minishift-1.29.0-linux-amd64.tgz /~/minishift-lab`
 
 Extract the content of the tar file with the command : +
 `+tar -xvf minishift-1.29.0-linux-amd64.tgz+` +
 
-Copy the Minishift to `/usr/bin` on root. +
+Copy the Minishift to /usr/bin on root. +
 `export PATH=/usr/bin/minishift:$PATH`
 
 Add the Minishift binary to your path variable. +
