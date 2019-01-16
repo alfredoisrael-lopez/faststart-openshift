@@ -1,5 +1,5 @@
 [[minishift]]
-= Lab1 Installing Minishift
+= Lab1 - Installing Minishift
 :icons:
 :toc: macro
 :toc-title:
