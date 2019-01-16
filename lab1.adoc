@@ -96,7 +96,7 @@ Create a project for your application. A project in RHOS is the direct equivalen
 
 `+oc new-project myproject --display-name="My Project"+`
 
-Create a sample application :
+Create a sample application in myproject :
 
 `+oc new-app https://github.com/sclorg/nodejs-ex -l name=myapp+`
 
