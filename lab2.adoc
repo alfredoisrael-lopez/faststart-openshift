@@ -202,11 +202,11 @@ In the sample application is the hard-coded message that is returned to the call
 
 We'll override this value by periodically retrieving a ConfigMap and overriding the value of message.
 
-1) Open app.js located in ~/minishift-lab/src . You can open this file in the Atom text editor located in the Desktop or in a text editor on the command line.
+1) Open app.js located in ~/minishift-lab/faststart-openshift-master/src . You can open this file in the Atom text editor located in the Desktop or in a text editor on the command line.
 
 2) Add timed interval to retrieve configmap
 
-In app.js add a new block of code that is executed every 2 seconds that retrieves the message value and overrides the variable. Append the following code to the bottom of app.js
+In app.js add a new block of code that is executed every 2 seconds that retrieves the message value and overrides the variable. Add the following code at the bottom of app.js
 
   setInterval(() => {
   retrieveConfigMap().then(config => {
@@ -230,7 +230,7 @@ We catch and ignore errors for the purposes of this sample.
 
 Now that we have the logic in place to update the value, we need to implement the missing retrieveConfigMap() method which will need to return a promise to call into OpenShift and retrieve the ConfigMap content itself.
 
-3) Add Configmap retrieval logic. You should also append the code below to the end of the app.js file.
+3) Add Configmap retrieval logic. You should also append this code to the bottom of the app.js file.
 
   // Find the Config Map
   const openshiftRestClient = require('openshift-rest-client');
