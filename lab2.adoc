@@ -49,10 +49,9 @@ The /api/greeting API defined in app.js returns a simple message including an op
 
 These files from the GitHub repository have already been downloaded for you in the minishift-lab folder on your Skytap machine.
 
-Confirm that you're still in the minishift-lab folder in the Terminal window.
+Go to the src directory in minishift-lab in your Terminal window.
 
-  skytap@icpmaster:~/minishift-lab$ pwd
-  /home/skytap/minishift-lab
+  cd ~/minishift-lab/faststart-openshift-master/src
 
 2) Install dependencies
 
