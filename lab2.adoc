@@ -47,6 +47,10 @@ Review the content a bit and notice that there are some TODO comments in the cod
 
 The /api/greeting API defined in app.js returns a simple message including an optional name. You will modify this file later on.
 
+These files from the GitHub repository have already been downloaded for you in the minishift-lab folder on your Skytap machine.
+
+Confirm that you're still in the minishift-lab folder in the Terminal window
+
 2) Install dependencies
 
 Dependencies are listed in the link:src/package.json[package.json] file and declare which external
