@@ -203,9 +203,11 @@ In the sample application is the hard-coded message that is returned to the call
 
 We'll override this value by periodically retrieving a ConfigMap and overriding the value of message.
 
-1) Add timed interval to retrieve configmap
+1) Open app.js located in ~/minishift-lab/src . You can open this file in the Atom text editor located in the Desktop or in a text editor on the command line.
 
-In app.js add a new block of code that is executed every 2 seconds that retrieves the message value and overrides the variable.
+2) Add timed interval to retrieve configmap
+
+In app.js add a new block of code that is executed every 2 seconds that retrieves the message value and overrides the variable. Append the following code to the bottom of app.js
 
   setInterval(() => {
   retrieveConfigMap().then(config => {
@@ -229,7 +231,7 @@ We catch and ignore errors for the purposes of this sample.
 
 Now that we have the logic in place to update the value, we need to implement the missing retrieveConfigMap() method which will need to return a promise to call into OpenShift and retrieve the ConfigMap content itself.
 
-2) Add Configmap retrieval Logic
+3) Add Configmap retrieval logic. You should also append the code below to the end of the app.js file.
 
   // Find the Config Map
   const openshiftRestClient = require('openshift-rest-client');
@@ -257,7 +259,7 @@ The final chain called every 2 seconds looks something like:
 
   openshiftRestClient -> retrieve ConfigMap using .find('app-config') -> convert yaml to json ->  override message value
 
-With our new logic in place, we can now create the actual ConfigMap within OpenShift which will contain the config vales accessed by the logic.
+Save app.js along with the new changes. With our new logic in place, we can now create the actual ConfigMap within OpenShift which will contain the config vales accessed by the logic.
 
 [[create-configmap]]
 == Create ConfigMap Object
