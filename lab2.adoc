@@ -49,7 +49,10 @@ The /api/greeting API defined in app.js returns a simple message including an op
 
 These files from the GitHub repository have already been downloaded for you in the minishift-lab folder on your Skytap machine.
 
-Confirm that you're still in the minishift-lab folder in the Terminal window
+Confirm that you're still in the minishift-lab folder in the Terminal window.
+
+  skytap@icpmaster:~/minishift-lab$ pwd
+  /home/skytap/minishift-lab
 
 2) Install dependencies
 
