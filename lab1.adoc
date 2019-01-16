@@ -111,5 +111,4 @@ image::projectdetail.png[projectdetail]
 
 
 You have successfully installed Minishift, created a sample application, and exposed it via a Kubernetes service.
-[Lab 1 - Installing Minishift](src=lab1.adoc)
-[Click here to proceed to Lab 2 - Developing a Node.js application on OpenShift](lab2.adoc)
+https://github.com/cattoire/faststart-openshift/blob/master/lab2.adoc[Click here to proceed to Lab 2 - Developing a Node.js application on OpenShift]
