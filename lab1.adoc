@@ -40,7 +40,7 @@ image::skytaplogin.png[skytaplogin]
 Within the image, you can click on the Desktop to open Firefox or Chrome. Firefox has been set as the default browser. It may be helpful to open the labs in the browser for easier copying and pasting of commands below. https://github.com/cattoire/faststart-openshift/blob/master/lab1.adoc
 
 If you are now viewing this lab within the Skytap image browser, you can download the binary for installing Minishift on Linux from https://github.com/minishift/minishift/releases/download/v1.29.0/minishift-1.29.0-linux-amd64.tgz
-The binary has been also been downloaded for you in the 'minishift-lab' directory under `/home/skytap`. This will be used to install Minishift on your virtual machine.
+Save the binary to your Downloads file. This will be used to install Minishift on your virtual machine.
 
 Minishift requires a hypervisor to start the virtual machine on which the OpenShift cluster
 is provisioned. In our lab we will use Virtual Box which has already been provided on the virtual machine.
@@ -48,16 +48,23 @@ is provisioned. In our lab we will use Virtual Box which has already been provid
 For detailed installation instructions for Minishift and the required dependencies, see
 the https://docs.okd.io/latest/minishift/getting-started/index.html[Getting started] documentation.
 
-Open a terminal window in the virtual machine. There is a shortcut to the Terminal on the Desktop. Navigate to the 'minishift-lab' directory. +
+Open a terminal window in the virtual machine. There is a shortcut to the Terminal on the Desktop. Navigate to the `minishift-lab` directory. +
 `cd /~/minishift-lab`
 
-Extract the content of the tar file with the command : +
-`+tar -xvf minishift-1.29.0-darwin-amd64.tgz+` +
+Copy the Minishift binary to the `minishift-lab` directory. +
+`cp /~/Downloads/minishift-1.29.0-linux-amd64.tgz /~/minishift-lab`
 
-Add the minishift binary to your path variable.
+Extract the content of the tar file with the command : +
+`+tar -xvf minishift-1.29.0-linux-amd64.tgz+` +
+
+Copy the Minishift to `/usr/bin` on root. +
+`export PATH=/usr/bin/minishift:$PATH`
+
+Add the Minishift binary to your path variable. +
+`export PATH=/usr/bin/minishift:$PATH`
 
 Start your minishift instance by executing : +
-`+minishift start --vmdriver virtualbox+`
+`+minishift start --vm-driver virtualbox+`
 
 After the server has started you should see something similar to the below
 
