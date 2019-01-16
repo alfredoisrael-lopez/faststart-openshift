@@ -54,7 +54,7 @@ Open a terminal window in the virtual machine. There is a shortcut to the Termin
 `cd ~/minishift-lab`
 
 Copy the Minishift binary to the minishift-lab directory. +
-`cp ~/Downloads/minishift-1.29.0-linux-amd64.tgz /~/minishift-lab`
+`cp ~/Downloads/minishift-1.29.0-linux-amd64.tgz ~/minishift-lab`
 
 Extract the content of the tar file with the command : +
 `+tar -xvf minishift-1.29.0-linux-amd64.tgz+` +
