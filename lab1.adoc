@@ -40,7 +40,7 @@ image::skytaplogin.png[skytaplogin]
 Within the image, you can click on the Desktop to open Firefox or Chrome. Firefox has been set as the default browser. It may be helpful to open the labs in the browser for easier copying and pasting of commands below. https://github.com/cattoire/faststart-openshift/blob/master/lab1.adoc
 
 If you are now viewing this lab within the Skytap image browser, you can download the binary for installing Minishift on Linux from https://github.com/minishift/minishift/releases/download/v1.29.0/minishift-1.29.0-linux-amd64.tgz
-Save the binary to your Downloads file. This will be used to install Minishift on your virtual machine.
+Save the tat file to your Downloads folder. This will be used to install Minishift on your virtual machine.
 
 Minishift requires a hypervisor to start the virtual machine on which the OpenShift cluster
 is provisioned. In our lab we will use Virtual Box which has already been provided on the virtual machine.
@@ -48,7 +48,7 @@ is provisioned. In our lab we will use Virtual Box which has already been provid
 For detailed installation instructions for Minishift and the required dependencies, see
 the https://docs.okd.io/latest/minishift/getting-started/index.html[Getting started] documentation.
 
-Open a terminal window in the virtual machine. There is a shortcut to the Terminal on the Desktop. Navigate to the minishift-lab directory. +
+Open a terminal window in the virtual machine. There is a shortcut to the Terminal on the Desktop. Navigate to the minishift-lab directory with the following command. +
 `cd /~/minishift-lab`
 
 Copy the Minishift binary to the minishift-lab directory. +
@@ -64,7 +64,7 @@ When prompted for the root password, enter `A1rb0rn3` and press enter.
 Add the Minishift binary to your path variable. +
 `export PATH=/usr/bin/minishift:$PATH`
 
-Start your minishift instance by executing : +
+Start your Minishift instance by executing : +
 `+minishift start --vm-driver virtualbox+`
 
 After the server has started you should see something similar to the below
@@ -87,7 +87,7 @@ The first step is to ensure that the oc client is added to your path. Execute :
 
 `+eval $(minishift oc-env)+`
 
-Now you should be able to execute `+oc+`. This will show you the man page for the openshift client.
+Now you should be able to execute `+oc+`. This will show you the man page for the OpenShift client.
 
 Create a sample application :
 
@@ -108,3 +108,7 @@ image::myprojects.png[MyProjects]
 Click on the My Project entry and open the details
 
 image::projectdetail.png[projectdetail]
+
+
+You have successfully installed Minishift, created a sample application, and exposed it via a Kubernetes service.
+[Click here to proceed to Lab 2 - Developing a Node.js application on OpenShift](lab2.adoc)
