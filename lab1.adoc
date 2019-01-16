@@ -79,7 +79,7 @@ After the server has started you should see something similar to the below
        User:     developer
        Password: developer
   To login as administrator:
-       oc login -u system:admin+`
+       oc login -u system:admin
 
 Try to access the web console using a browser. Your Minishift is now installed.
 
