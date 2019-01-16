@@ -54,13 +54,13 @@ Open a terminal window in the virtual machine. There is a shortcut to the Termin
 `cd ~/minishift-lab`
 
 Copy the Minishift binary to the minishift-lab directory. +
-`cp /~/Downloads/minishift-1.29.0-linux-amd64.tgz /~/minishift-lab`
+`cp ~/Downloads/minishift-1.29.0-linux-amd64.tgz /~/minishift-lab`
 
 Extract the content of the tar file with the command : +
 `+tar -xvf minishift-1.29.0-linux-amd64.tgz+` +
 
 Copy the Minishift to /usr/bin on root. +
-`sudo cp /~/minishift-lab/minishift-1.29.0-linux-amd64/minishift /usr/bin`
+`sudo cp ~/minishift-lab/minishift-1.29.0-linux-amd64/minishift /usr/bin`
 When prompted for the root password, enter `A1rb0rn3` and press enter.
 
 Add the Minishift binary to your path variable. +
