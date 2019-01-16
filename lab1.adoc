@@ -109,6 +109,8 @@ Click on the My Project entry and open the details
 
 image::projectdetail.png[projectdetail]
 
+'''''
 
 You have successfully installed Minishift, created a sample application, and exposed it via a Kubernetes service.
+
 https://github.com/cattoire/faststart-openshift/blob/master/lab2.adoc[Click here to proceed to Lab 2 - Developing a Node.js application on OpenShift]
