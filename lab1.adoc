@@ -39,12 +39,13 @@ image::skytaplogin.png[skytaplogin]
 
 Within the image, you can click on the Desktop to open Firefox or Chrome. Firefox has been set as the default browser. It may be helpful to open the labs in the browser for easier copying and pasting of the commands below. Follow the link to this lab: https://github.com/cattoire/faststart-openshift/blob/master/lab1.adoc
 
-If you are now viewing this lab within the Skytap image browser, you can download the binary for installing Minishift on Linux from https://github.com/minishift/minishift/releases/download/v1.29.0/minishift-1.29.0-linux-amd64.tgz
+If you are now viewing this lab within the Skytap image browser, you can download the binary for installing Minishift on Linux from https://github.com/minishift/minishift/releases/download/v1.29.0/minishift-1.29.0-linux-amd64.tgz . Select the Save File radio button and press OK, which will save the file to your Downloads folder by default. You will use the contents of the download to install Minishift on your virtual machine.
 
-Save the tar file to your Downloads folder. This will be used to install Minishift on your virtual machine.
+image::savefile.png[savefile]
+
 
 Minishift requires a hypervisor to start the virtual machine on which the OpenShift cluster
-is provisioned. In our lab we will use Virtual Box which has already been provided on the virtual machine.
+is provisioned. In our lab we will use VirtualBox which has already been provided on the virtual machine.
 
 For detailed installation instructions for Minishift and the required dependencies, see
 the https://docs.okd.io/latest/minishift/getting-started/index.html[Getting started] documentation.
