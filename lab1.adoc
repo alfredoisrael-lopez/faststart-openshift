@@ -27,7 +27,7 @@ https://ci.centos.org/job/minishift/[image:https://ci.centos.org/buildStatus/ico
 [[getting-started]]
 == Getting started
 
-At Fast Start 2019, we will be using a single virtual machine environment in Skytap to host Minishift. Click on the play button to start up your VM.
+At Fast Start 2019, we will be using a single virtual machine environment in Skytap to host Minishift. The base image is loaded with Ubuntu 18.10 and a few simple tools, like the npm package manager and a VirtualBox hypervisor. Click on the play button to start up your VM.
 
 image::startvm.png[startvm]
 
